@@ -1,0 +1,222 @@
+ <!DOCTYPE html>
+ <html lang="en">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="messanger.css">
+  <link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+  integrity="sha512-SfTiTlX6kk+qitfevl/7LibUOeJWlt9rbyDn92a1DqWOw9vWG2MFoays0sgObmWazO5BQPiFucnnEAjpAB+/Sw=="
+  crossorigin="anonymous"
+  referrerpolicy="no-referrer"
+/>
+ </head>
+ <body>
+  <div class="navbar">
+    <a href="#"><i class="fa fa-fw fa-home"></i> Home</a> 
+    <a href="#"><i class="fa fa-fw fa-search"></i> Search</a> 
+    <a href="#"><i class="fa fa-fw fa-envelope"></i> Contact</a> 
+    <a href="#" id="messenger-icon"><i class="fa fa-comments" aria-hidden="true"></i> Messenger</a>
+  </div>
+
+  <div class="content-chat">
+    <div class="content-chat-user" id="chat-popup">
+        <div class="head-search-chat">
+            <h4>Chats</h4> 
+            <i class="fa fa-user-plus" aria-hidden="true"></i>
+        </div>
+        
+        <div class="search-user mt-30">
+            <input id="search-input" type="text" placeholder="Search For Chat..." name="search" class="search">
+            <span>
+                <i class="fa fa-search" aria-hidden="true"></i>
+            </span>
+        </div>
+
+        <div class="list-search-user-chat mt-20">
+            <div class="user-chat" data-username="Maria Dennis">
+                <div class="user-chat-img">
+                     <span>M</span>
+                </div>
+                
+                <div class="user-chat-text">
+                    <p class="mt-0 mb-0"><strong>Maria Dennis</strong></p>
+                    <small>Hi, how are you?</small>
+                </div>
+            </div>
+            <div class="user-chat" data-username="Jorge Harrinson">
+                <div class="user-chat-img">
+                    <span>J</span>
+                </div>
+                
+                <div class="user-chat-text">
+                    <p class="mt-0 mb-0"><strong>Jorge Harrinson</strong></p>
+                    <small>Hi, how are you?</small>
+                </div>
+            </div>
+            <div class="user-chat" data-username="Carla Terry">
+                <div class="user-chat-img">
+                    <span>C</span>
+                </div>
+                
+                <div class="user-chat-text">
+                    <p class="mt-0 mb-0"><strong>Carla Terry</strong></p>
+                    <small>Hi, how are you?</small>
+                </div>
+            </div> 
+        </div>
+        
+    </div>
+
+    <div class="content-chat-message-user" data-username="Maria Dennis">
+        <section class="msger">
+            <header class="msger-header">
+              <div class="msger-header-title">
+                <i class="fas fa-comment-alt"></i> Maria Dennis
+              </div> 
+            </header>
+      
+            <main class="msger-chat">
+              <div class="msg left-msg">
+                <div class="msg-img"></div>
+      
+                <div class="msg-bubble">
+                  <div class="msg-info">
+                    <div class="msg-info-name">BOT</div>
+                    <div class="msg-info-time">12:45</div>
+                  </div>
+      
+                  <div class="msg-text">
+                    Hi, welcome to SimpleChat! Go ahead and send me a message. 😄
+                  </div>
+                </div>
+              </div>
+      
+              <div class="msg right-msg">
+                <div class="msg-img"></div>
+      
+                <div class="msg-bubble">
+                  <div class="msg-info">
+                    <div class="msg-info-name">Sajad</div>
+                    <div class="msg-info-time">12:46</div>
+                  </div>
+      
+                  <div class="msg-text">You can change your name in JS section!</div>
+                </div>
+              </div>
+            </main>
+      
+            <form class="msger-inputarea">
+              <input
+                type="text"
+                class="msger-input"
+                placeholder="Enter your message..."
+              />
+              <button type="submit" class="msger-send-btn">Send</button>
+            </form>
+        </section>
+    </div>
+
+    <div class="content-chat-message-user" data-username="Jorge Harrinson">
+        <section class="msger">
+            <header class="msger-header">
+              <div class="msger-header-title">
+                <i class="fas fa-comment-alt"></i> Jorge Harrinson
+              </div> 
+            </header>
+      
+            <main class="msger-chat">
+              <div class="msg left-msg">
+                <div class="msg-img"></div>
+      
+                <div class="msg-bubble">
+                  <div class="msg-info">
+                    <div class="msg-info-name">BOT</div>
+                    <div class="msg-info-time">12:45</div>
+                  </div>
+      
+                  <div class="msg-text">
+                    Hi, welcome to SimpleChat! Go ahead and send me a message. 😄
+                  </div>
+                </div>
+              </div>
+      
+              <div class="msg right-msg">
+                <div class="msg-img"></div>
+      
+                <div class="msg-bubble">
+                  <div class="msg-info">
+                    <div class="msg-info-name">Sajad</div>
+                    <div class="msg-info-time">12:46</div>
+                  </div>
+      
+                  <div class="msg-text">You can change your name in JS section!</div>
+                </div>
+              </div>
+            </main>
+      
+            <form class="msger-inputarea">
+              <input
+                type="text"
+                class="msger-input"
+                placeholder="Enter your message..."
+              />
+              <button type="submit" class="msger-send-btn">Send</button>
+            </form>
+        </section>
+    </div>
+
+    <div class="content-chat-message-user" data-username="Carla Terry">
+        <section class="msger">
+            <header class="msger-header">
+              <div class="msger-header-title">
+                <i class="fas fa-comment-alt"></i> Carla Terry
+              </div> 
+            </header>
+      
+            <main class="msger-chat">
+              <div class="msg left-msg">
+                <div class="msg-img"></div>
+      
+                <div class="msg-bubble">
+                  <div class="msg-info">
+                    <div class="msg-info-name">BOT</div>
+                    <div class="msg-info-time">12:45</div>
+                  </div>
+      
+                  <div class="msg-text">
+                    Hi, welcome to SimpleChat! Go ahead and send me a message. 😄
+                  </div>
+                </div>
+              </div>
+      
+              <div class="msg right-msg">
+                <div class="msg-img"></div>
+      
+                <div class="msg-bubble">
+                  <div class="msg-info">
+                    <div class="msg-info-name">Sajad</div>
+                    <div class="msg-info-time">12:46</div>
+                  </div>
+      
+                  <div class="msg-text">You can change your name in JS section!</div>
+                </div>
+              </div>
+            </main>
+      
+            <form class="msger-inputarea">
+              <input
+                type="text"
+                class="msger-input"
+                placeholder="Enter your message..."
+              />
+              <button type="submit" class="msger-send-btn">Send</button>
+            </form>
+        </section>
+    </div>
+ </div>
+<script src="messanger.js"></script>
+ </body>
+ </html>
