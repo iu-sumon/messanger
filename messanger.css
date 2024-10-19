@@ -491,8 +491,7 @@ ol li {
 }
 
 .head-search-chat {
-  background-color: #2a2f30;
-  /* background-color: #242526; */
+  background-color: #2a2f30; 
   margin: -15px -15px 15px -15px;
   border-radius: 25px 25px 0 0;
   display: flex;
@@ -620,9 +619,6 @@ ol li {
   margin-right: 8px;
 }
  
-
-
-
 .msger {
   display: flex;
   flex-flow: column wrap;
@@ -630,15 +626,39 @@ ol li {
   max-width: 348px; 
   height: calc(100% - 207px);  
 }
+
 .msger-header {
   display: flex;
-  justify-content: space-between;
-  padding: 10px;
+  align-items: center;
+  padding: 5px 10px;
   border-bottom: 1px solid rgba(0, 0, 0, 0.6);
   background: #242526;
   color: #fff; 
   border-top-left-radius: 20px;
   border-top-right-radius: 20px;
+}
+
+.msger-header h5 {
+  color: #ffffff;
+  margin-right: auto;
+}
+
+.msger-header i {
+  width: 30px;
+  height: 30px;
+  padding: 15px 0px 0px 17px;
+  cursor: pointer;
+  font-size: 17px;
+  border-radius: 25px;
+  color: #ffffff;
+}
+
+.msger-header fa-minus{
+  margin-right: 5px;
+}
+
+.msger-header i:hover {
+  background-color: #c6b2b23a;
 }
 
 
@@ -743,4 +763,76 @@ ol li {
 }
 .msger-send-btn:hover {
   background: rgb(0, 180, 50);
+}
+
+.minimized-chat {
+  position: relative;
+  display: inline-block;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background-color: #007bff;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  margin-right: 10px;
+}
+
+
+.minimized-chat-shortname{ 
+  font-size: 39px; 
+}
+.minimized-chat-tooltip {
+  position: absolute;
+  left: -120px; /* Increased the left offset for gap */
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: #333;
+  color: #fff;
+  padding: 8px;
+  border-radius: 5px;
+  white-space: nowrap;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease;
+}
+
+/* Adding the triangle/angle using ::after pseudo-element */
+.minimized-chat-tooltip::after {
+  content: '';
+  position: absolute;
+  right: -10px;
+  top: 50%;
+  transform: translateY(-50%);
+  border-width: 6px;
+  border-style: solid;
+  border-color: transparent transparent transparent #333; /* Triangle pointing left */
+}
+
+.minimized-chat-btn {
+  position: absolute;
+  right: -10px;
+  top: -10px;
+  background-color: #f44336;
+  color: white;
+  font-size: 16px;
+  border: none;
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease;
+}
+
+.minimized-chat:hover .minimized-chat-tooltip,
+.minimized-chat:hover .minimized-chat-btn{
+  opacity: 1;
+  visibility: visible;
 }
