@@ -3,102 +3,97 @@ const BOT_MSGS = [
     "Ohh... I can't understand what you trying to say. Sorry!",
     "I like to play games... But I don't know how to play!",
     "Sorry if my answers are not relevant. :))",
-    "I feel sleepy! :("
+    "I feel sleepy! :(",
+    "At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident"
 ];
 
 const BOT_NAME = "BOT";
 
-// Get the Messenger icon and chat popup
-const messengerIcon = document.getElementById('messenger-icon');
-const chatPopup = document.getElementById('chat-popup');
-
 // Toggle the chat popup when Messenger icon is clicked
-messengerIcon.addEventListener('click', function (event) {
+$('#messenger-icon').on('click', function (event) {
     event.stopPropagation(); // Prevent click event from propagating to the document
-    chatPopup.classList.toggle('active');
+    $('#chat-popup').toggleClass('active');
 });
 
 // Hide the chat popup when clicking outside
-document.addEventListener('click', function (event) {
-    if (!chatPopup.contains(event.target) && !messengerIcon.contains(event.target)) {
-        chatPopup.classList.remove('active');
+$(document).on('click', function (event) {
+    if (!$('#chat-popup').is(event.target) && !$('#messenger-icon').is(event.target) && $('#chat-popup').has(event.target).length === 0) {
+        $('#chat-popup').removeClass('active');
     }
 });
 
 // Stop the click event inside the popup from closing the popup
-chatPopup.addEventListener('click', function (event) {
+$('#chat-popup').on('click', function (event) {
     event.stopPropagation();
 });
 
 // Function to manage multiple chat windows
 function handleMessagingForChat(username) {
-    const chatWindow = document.querySelector(`.content-chat-message-user[data-username="${username}"]`);
-    const msgerForm = chatWindow.querySelector('.msger-inputarea');
-    const msgerInput = chatWindow.querySelector('.msger-input');
-    const msgerChat = chatWindow.querySelector('.msger-chat');
+    const chatWindow = $(`.content-chat-message-user[data-username="${username}"]`);
+    const msgerForm = chatWindow.find('.msger-inputarea');
+    const msgerInput = chatWindow.find('.msger-input');
+    const msgerChat = chatWindow.find('.msger-chat');
 
-    msgerForm.addEventListener("submit", function(event) {
+    msgerForm.on("submit", function(event) {
         event.preventDefault();
 
-        const msgText = msgerInput.value;
+        const msgText = msgerInput.val();
         if (!msgText) return;
 
-        appendMessage(username,"right", msgText, msgerChat);
-        msgerInput.value = "";
+        appendMessage(username, "right", msgText, msgerChat);
+        msgerInput.val("");
 
         botResponse(msgerChat); // Simulate bot response per chat
     });
 }
 
 // Handle user chat selection
-const userChats = document.querySelectorAll('.user-chat');
-const chatMessages = document.querySelectorAll('.content-chat-message-user');
+$('.user-chat').on('click', function () {
+    const selectedUsername = $(this).attr('data-username');
 
-userChats.forEach((userChat) => {
-    userChat.addEventListener('click', () => {
-        const selectedUsername = userChat.getAttribute('data-username');
+    // Activate the corresponding chat window and allow messaging
+    $('.content-chat-message-user').each(function () {
+        const msgerChat = $(this).find('.msger-chat');
+        const msgerInputArea = $(this).find('.msger-inputarea');
+        const messageUsername = $(this).attr('data-username');
 
-        // Activate the corresponding chat window and allow messaging
-        chatMessages.forEach((chatMessage) => {
-            let msgerChat = chatMessage.querySelector('.msger-chat');
-            let msgerInputArea = chatMessage.querySelector('.msger-inputarea');
-            const messageUsername = chatMessage.getAttribute('data-username');
+        if (messageUsername === selectedUsername) {
+            // Remove any minimized circle if the chat is reopened
+            const minimizedCircle = $(`.minimized-chat[data-username="${selectedUsername}"]`);
+            if (minimizedCircle.length) minimizedCircle.remove();
 
-            if (messageUsername === selectedUsername) {
-                // Remove any minimized circle if the chat is reopened
-                const minimizedCircle = document.querySelector(`.minimized-chat[data-username="${selectedUsername}"]`);
-                if (minimizedCircle) minimizedCircle.remove();
+            $(this).addClass('active');
+            msgerChat.show();
+            msgerInputArea.show();
+            $('#chat-popup').removeClass('active');
 
-                chatMessage.classList.add('active');
-                msgerChat.style.display = 'block';
-                msgerInputArea.style.display = 'block';
-                chatPopup.classList.remove('active');
-
-                // Initialize messaging for the selected chat
-                handleMessagingForChat(selectedUsername);
-            }
-        });
+            // Initialize messaging for the selected chat
+            handleMessagingForChat(selectedUsername);
+        }
     });
 });
 
 // Messaging functionality for each active chat
 function appendMessage(name, side, text, chatElement) {
+    let msg_img_text = `${side.charAt(0)}`;
+    let msg_img_text_upper = (msg_img_text).toUpperCase();
     const msgHTML = `
         <div class="msg ${side}-msg">
-            <div class="msg-img"></div>
-            <div class="msg-bubble">
-                <div class="msg-info">
-                    <div class="msg-info-name">${name}</div>
-                    <div class="msg-info-time">${formatDate(new Date())}</div>
+            <div class="msg-img">${msg_img_text_upper}</div>
+               <div class="${side}-msg-boby">
+                <div class="msg-bubble"> 
+                    <div class="msg-text">${text}</div>
+                    </div>
+                    <div class="${side}-msg-time">${formatDate(new Date())}</div>   
                 </div>
-                <div class="msg-text">${text}</div>
-            </div>
         </div>
     `;
 
-    chatElement.insertAdjacentHTML("beforeend", msgHTML);
+
+
+    chatElement.append(msgHTML);
     setTimeout(() => {
-        chatElement.scrollTop = chatElement.scrollHeight;
+        chatElement.scrollTop(chatElement[0].scrollHeight);
     }, 100);
 }
 
@@ -113,10 +108,6 @@ function botResponse(chatElement) {
 }
 
 // Utility functions
-function get(selector, root = document) {
-    return root.querySelector(selector);
-}
-
 function formatDate(date) {
     const h = "0" + date.getHours();
     const m = "0" + date.getMinutes();
@@ -129,67 +120,66 @@ function random(min, max) {
 
 // Function to handle minimize, restore, and close actions for each chat window
 function handleChatWindowActions() {
-    const chatWindows = document.querySelectorAll('.content-chat-message-user');
-
-    chatWindows.forEach(chatWindow => {
-        const username = chatWindow.getAttribute('data-username');
-        const minimizeBtn = chatWindow.querySelector('.fa-minus');
-        const closeBtn = chatWindow.querySelector('.fa-times');
+    $('.content-chat-message-user').each(function () {
+        const chatWindow = $(this);
+        const username = chatWindow.attr('data-username');
+        const minimizeBtn = chatWindow.find('.fa-minus');
+        const closeBtn = chatWindow.find('.fa-times');
         let minimizedCircle;
 
         // Minimize chat
-        minimizeBtn.addEventListener('click', () => {
-            const chatContent = chatWindow.querySelector('.msger-chat');
-            const msgInputArea = chatWindow.querySelector('.msger-inputarea');
+        minimizeBtn.on('click', function () {
+            const chatContent = chatWindow.find('.msger-chat');
+            const msgInputArea = chatWindow.find('.msger-inputarea');
 
             // Hide chat content and input area
-            chatContent.style.display = 'none';
-            msgInputArea.style.display = 'none';
+            chatContent.hide();
+            msgInputArea.hide();
 
             // Remove active class when minimized
-            chatWindow.classList.remove('active');
+            chatWindow.removeClass('active');
 
             // Check if a minimized circle already exists, and remove it before creating a new one
-            const existingMinimizedCircle = document.querySelector(`.minimized-chat[data-username="${username}"]`);
-            if (existingMinimizedCircle) {
+            const existingMinimizedCircle = $(`.minimized-chat[data-username="${username}"]`);
+            if (existingMinimizedCircle.length) {
                 existingMinimizedCircle.remove();
             }
 
             // Create minimized circle with the user's initial
-            minimizedCircle = document.createElement('div');
-            minimizedCircle.classList.add('minimized-chat');
-            minimizedCircle.setAttribute('data-username', username); // Set username attribute for identification
-            minimizedCircle.innerHTML = `
-                <span></span>
-                <span class="minimized-chat-shortname">${username.charAt(0)}</span>
-                <span class="minimized-chat-tooltip">${username}</span>
-                <span class="minimized-chat-btn">&times;</span>
-            `;
-            chatWindow.insertAdjacentElement('beforebegin', minimizedCircle);
+            minimizedCircle = $('<div/>', {
+                class: 'minimized-chat',
+                'data-username': username,
+                html: `
+                    <span></span>
+                    <span class="minimized-chat-shortname">${username.charAt(0)}</span>
+                    <span class="minimized-chat-tooltip">${username}</span>
+                    <span class="minimized-chat-btn">&times;</span>
+                `
+            });
+
+            chatWindow.before(minimizedCircle);
 
             // Handle click on the minimized circle to restore chat
-            minimizedCircle.addEventListener('click', (event) => {
-                if (!event.target.classList.contains('minimized-chat-btn')) {
+            minimizedCircle.on('click', function (event) {
+                if (!$(event.target).hasClass('minimized-chat-btn')) {
                     // Restore chat if not clicking the '×' button
-                    const chatContent = chatWindow.querySelector('.msger-chat');
-                    const msgInputArea = chatWindow.querySelector('.msger-inputarea');
-                    chatContent.style.display = 'block';
-                    msgInputArea.style.display = 'block';
-                    chatWindow.classList.add('active');
+                    chatContent.show();
+                    msgInputArea.show();
+                    chatWindow.addClass('active');
                     minimizedCircle.remove(); // Remove the minimized circle after restoring
                 }
             });
 
             // Handle click on the minimized-chat-btn to close the minimized circle
-            minimizedCircle.querySelector('.minimized-chat-btn').addEventListener('click', (event) => {
+            minimizedCircle.find('.minimized-chat-btn').on('click', function (event) {
                 event.stopPropagation(); // Prevent triggering the restore functionality
                 minimizedCircle.remove(); // Remove only this minimized circle
             });
         });
 
         // Close chat (hide instead of removing)
-        closeBtn.addEventListener('click', () => {
-            chatWindow.classList.remove('active'); // Remove active class on close
+        closeBtn.on('click', function () {
+            chatWindow.removeClass('active'); // Remove active class on close
             if (minimizedCircle) {
                 minimizedCircle.remove(); // Remove the minimized circle if it exists
             }
@@ -198,6 +188,6 @@ function handleChatWindowActions() {
 }
 
 // Initialize chat window actions when the page loads
-document.addEventListener('DOMContentLoaded', () => {
+$(document).ready(function () {
     handleChatWindowActions();
 });
