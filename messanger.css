@@ -463,11 +463,7 @@ ol li {
 }
 
 .content-chat {
-  display: flex;
-  align-items: flex-end;
-  justify-content: flex-end;
   position: relative;
-  margin-top: 10px;
 }
 
 .content-chat-message-user-container{
@@ -484,6 +480,7 @@ ol li {
   position: absolute;
   top: 0px;
   right: 50px;
+  z-index: 9999;
 }
 
 .content-chat-user.active {
@@ -610,20 +607,32 @@ ol li {
   color:#e4e6eb;
 }
 
-.content-chat .content-chat-message-user{
+/* Styles for the chat window display */
+.content-chat-message-user {
+  position: fixed;
+  bottom: 0;
+  right: 80px;
+  z-index: 10;
   display: none;
 }
 
-.content-chat .content-chat-message-user.active{
+.content-chat-message-user.active{
   display: block;
-  margin-right: 8px;
+}
+
+/* Apply gaps for each chat window, stacking them vertically */
+.content-chat-message-user:nth-child(2) {
+  right: 430px;
+}
+.content-chat-message-user:nth-child(3) {
+  right: 780px;
 }
  
 .msger {
   display: flex;
   flex-flow: column wrap;
   justify-content: space-between; 
-  max-width: 348px; 
+  max-width: 338px; 
   height: calc(100% - 207px);  
 }
 
@@ -650,7 +659,7 @@ ol li {
   cursor: pointer;
   font-size: 17px;
   border-radius: 25px;
-  color: #ffffff;
+  color: #0084ff;
 }
 
 .msger-header fa-minus{
