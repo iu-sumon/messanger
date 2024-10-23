@@ -470,7 +470,6 @@ ol li {
   display: flex;
 }
  .content-chat-user {
-  /* background-color: #0d1117; */
   background-color: #242526;
   padding: 15px;
   border-radius: 25px;
@@ -787,7 +786,7 @@ ol li {
   background-color: #daa520;
 }
 
-/* Minimized chat circles */
+ /* Minimized chat circles */
 .minimized-chat {
   position: fixed;
   right: 20px; /* Adjusted to align at the right edge */
@@ -820,12 +819,16 @@ ol li {
   bottom: 200px;
 } */
 
-.minimized-chat-shortname{ 
+.minimized-chat-shortname { 
   font-size: 39px; 
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
+
 .minimized-chat-tooltip {
   position: absolute;
-  left: -100px; /* Increased the left offset for gap */
+  left: -120px; /* Increased the left offset for gap */
   top: 50%;
   transform: translateY(-50%);
   background-color: #333;
@@ -836,6 +839,8 @@ ol li {
   opacity: 0;
   visibility: hidden;
   transition: opacity 0.3s ease;
+  width: 100px; /* Fixed width for tooltip */
+  text-align: center; /* Center text in tooltip */
 }
 
 /* Adding the triangle/angle using ::after pseudo-element */
@@ -852,7 +857,7 @@ ol li {
 
 .minimized-chat-btn {
   position: absolute;
-  right: -10px;
+  right: -10px; /* Position button consistently from the circle */
   top: -10px;
   background-color: #f44336;
   color: white;
@@ -871,7 +876,7 @@ ol li {
 }
 
 .minimized-chat:hover .minimized-chat-tooltip,
-.minimized-chat:hover .minimized-chat-btn{
+.minimized-chat:hover .minimized-chat-btn {
   opacity: 1;
   visibility: visible;
 }
