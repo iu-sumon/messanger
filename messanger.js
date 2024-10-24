@@ -44,13 +44,14 @@ function updateChatPositions() {
     });
 }
 
-// Function to handle messaging for each chat window
 function handleMessagingForChat(username) {
     const chatWindow = $(`.content-chat-message-user[data-username="${username}"]`);
     const msgerForm = chatWindow.find('.msger-inputarea');
     const msgerInput = chatWindow.find('.msger-input');
+    const msgerFileInput = chatWindow.find('.msger-file-input'); // Get the file input
     const msgerChat = chatWindow.find('.msger-chat');
 
+    // Handle form submit (text message)
     msgerForm.on("submit", function (event) {
         event.preventDefault();
 
@@ -59,9 +60,36 @@ function handleMessagingForChat(username) {
 
         appendMessage(username, "right", msgText, msgerChat);
         msgerInput.val("");
-        botResponse(msgerChat);
+        botResponse(msgerChat); // Optional bot response
+    });
+
+    // Handle file selection
+    msgerFileInput.on('change', function (event) {
+        const file = event.target.files[0];
+        if (!file) return;
+
+        // Check if the selected file is an image
+        if (file.type.startsWith('image/')) {
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                appendImage(username, "right", e.target.result, msgerChat);
+            };
+            reader.readAsDataURL(file); // Convert the image file to base64 for preview
+        } else {
+            // If it's a non-image file (like .pdf, .txt, etc.), just append its name
+            appendFile(username, "right", file.name, msgerChat);
+        }
+
+        // Reset file input after sending
+        msgerFileInput.val('');
     });
 }
+
+// Trigger the file input when the file button is clicked
+$('.msger-file-btn').on('click', function () {
+    $(this).siblings('.msger-file-input').click(); // Trigger click on the hidden file input
+});
+
 
 // Handle user chat selection
 $('.user-chat').on('click', function () {
@@ -138,6 +166,11 @@ function minimizeChat(username) {
         // Handle click on the minimized circle to restore chat
         minimizedCircle.on('click', function (event) {
             if (!$(event.target).hasClass('minimized-chat-btn')) {
+                 // Check if there are already 3 active chats
+                if (activeChats.length >= MAX_VISIBLE_CHATS) {
+                    const oldestChatUsername = activeChats[0]; // Get the first active chat
+                    minimizeChat(oldestChatUsername); // Minimize the oldest chat
+                }
                 chatContent.show();
                 msgInputArea.show();
                 chatWindow.addClass('active');
@@ -180,6 +213,49 @@ function appendMessage(name, side, text, chatElement) {
         chatElement.scrollTop(chatElement[0].scrollHeight);
     }, 100);
 }
+
+function appendImage(name, side, imgSrc, chatElement) {
+    const msgHTML = `
+        <div class="msg ${side}-msg">
+            <div class="msg-img">${name.charAt(0).toUpperCase()}</div>
+            <div class="${side}-msg-boby">
+                <div class="msg-bubble"> 
+                    <img class="msg-image" src="${imgSrc}" alt="Image">
+                </div>
+                <div class="${side}-msg-time">${formatDate(new Date())}</div>   
+            </div>
+        </div>
+    `;
+
+    chatElement.append(msgHTML);
+    setTimeout(() => {
+        chatElement.scrollTop(chatElement[0].scrollHeight);
+    }, 100);
+}
+
+
+function appendFile(name, side, fileName, chatElement) {
+    const msgHTML = `
+        <div class="msg ${side}-msg">
+            <div class="msg-img">${name.charAt(0).toUpperCase()}</div>
+            <div class="${side}-msg-boby">
+                <div class="msg-bubble"> 
+                    <div class="msg-file">
+                        <i class="fa fa-file"></i>
+                        <span>${fileName}</span>
+                    </div>
+                </div>
+                <div class="${side}-msg-time">${formatDate(new Date())}</div>   
+            </div>
+        </div>
+    `;
+
+    chatElement.append(msgHTML);
+    setTimeout(() => {
+        chatElement.scrollTop(chatElement[0].scrollHeight);
+    }, 100);
+}
+
 
 function botResponse(chatElement) {
     const r = random(0, BOT_MSGS.length - 1);

@@ -606,14 +606,13 @@ ol li {
   color:#e4e6eb;
 }
 
-
 /* Styles for the chat window display */
 .content-chat-message-user {
   position: fixed;
-  bottom: 0;
+  bottom: 33px;
   right: 80px; /* This will be updated dynamically */
-  z-index: 10;
   display: none;
+  /* z-index: 99; */
 }
 
 .content-chat-message-user.active {
@@ -636,8 +635,8 @@ ol li {
   border-bottom: 1px solid rgba(0, 0, 0, 0.6);
   background: #242526;
   color: #fff; 
-  border-top-left-radius: 20px;
-  border-top-right-radius: 20px;
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
 }
 
 .msger-header h5 {
@@ -648,11 +647,11 @@ ol li {
 .msger-header i {
   width: 30px;
   height: 30px;
-  padding: 15px 0px 0px 17px;
+  padding: 7px 0px 0px 9px;
   cursor: pointer;
   font-size: 17px;
   border-radius: 25px;
-  color: #0084ff;
+  color: #eee;
 }
 
 .msger-header fa-minus{
@@ -698,7 +697,7 @@ ol li {
   width: 30px;
   height: 30px;
   margin-right: 7px;
-  background: #a20995;
+  background: #3a3b3c;
   border-radius: 50%;
   color: #ffffff;
   display: flex;
@@ -707,7 +706,8 @@ ol li {
 }
 
 .msg-bubble {
-  max-width: 430px;
+  /* max-width: 430px; */
+  max-width: 255px;
   padding: 6px;
   border-radius: 10px;
   background: #303030;
@@ -739,11 +739,13 @@ ol li {
 }
 
 .right-msg-time{
+  margin-top: 4px;
   font-size: 11px; 
   text-align: right;
 }
 
 .left-msg-time{
+  margin-top: 4px;
   font-size: 11px; 
   text-align: left;
 }
@@ -757,16 +759,16 @@ ol li {
   display: flex;
   padding: 7px; 
   background: #242526; 
-  border-bottom-left-radius: 20px;
-  border-bottom-right-radius: 20px;
+  /* border-bottom-left-radius: 20px;
+  border-bottom-right-radius: 20px; */
 }
 .msger-input {
   flex: 1;
   background: #3a3b3c;
+  padding: 5px;
 }
 
 .msger-inputarea * {
-  padding: 5px;
   border: none;
   border-radius: 30px;
   font-size: 1em;
@@ -775,21 +777,34 @@ ol li {
 }
 
 .msger-send-btn {
-  margin-left: 10px;
+  width: 35px;
+  height: 35px;
+  margin-left: 5px;
   background: rgb(58 59 60);
   color: #fff;
   font-weight: bold;
   cursor: pointer;
   transition: background 0.23s;
 }
-.msger-send-btn:hover {
+.msger-send-btn:hover,.msger-file-btn:hover{
   background-color: #daa520;
+}
+
+.msger-file-btn {
+  width: 35px;
+  height: 35px;
+  margin-right: 5px;
+  background: rgb(58 59 60);
+  color: #fff;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.23s;
 }
 
  /* Minimized chat circles */
 .minimized-chat {
   position: fixed;
-  right: 20px; /* Adjusted to align at the right edge */
+  right: 10px; /* Adjusted to align at the right edge */
   width: 50px;
   height: 50px;
   border-radius: 50%;
@@ -800,6 +815,7 @@ ol li {
   justify-content: center;
   cursor: pointer;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+  z-index: 999;
 }
 
 /* Dynamically stack the minimized circles vertically without overlap */
@@ -820,7 +836,7 @@ ol li {
 } */
 
 .minimized-chat-shortname { 
-  font-size: 39px; 
+  font-size: 34px; 
   display: flex;
   justify-content: center;
   align-items: center;
@@ -828,7 +844,7 @@ ol li {
 
 .minimized-chat-tooltip {
   position: absolute;
-  left: -120px; /* Increased the left offset for gap */
+  left: -130px; /* Increased the left offset for gap */
   top: 50%;
   transform: translateY(-50%);
   background-color: #333;
@@ -839,8 +855,8 @@ ol li {
   opacity: 0;
   visibility: hidden;
   transition: opacity 0.3s ease;
-  width: 100px; /* Fixed width for tooltip */
-  text-align: center; /* Center text in tooltip */
+  width: 130px; /* Fixed width for tooltip */
+  text-align: left; /* Center text in tooltip */
 }
 
 /* Adding the triangle/angle using ::after pseudo-element */
@@ -879,4 +895,22 @@ ol li {
 .minimized-chat:hover .minimized-chat-btn {
   opacity: 1;
   visibility: visible;
+}
+
+
+
+.msg-image {
+  max-width: 200px;
+  max-height: 200px;
+  display: block;
+}
+
+.msg-file {
+  display: flex;
+  align-items: center;
+}
+
+.msg-file i {
+  font-size: 18px;
+  margin-right: 8px;
 }
